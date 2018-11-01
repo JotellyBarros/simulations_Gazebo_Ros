@@ -2,7 +2,6 @@
 ```
 $ source ./devel/setup.bash
 ```
-
 ##### TURTLEBOT3
 -------------
 ##### Start the TURTLEBOT3 MODEL:
@@ -12,6 +11,10 @@ $ export TURTLEBOT3_MODEL=burger  (Camera)
 ##### Start Roslaunch Environments
 ```
 $ roslaunch turtlebot3_gazebo turtlebot3_empty_world.launch
+```
+##### Start Roslaunch Environment with Camera
+```
+$ roslaunch turtlebot3_gazebo turtlebot3_autorace.launch
 ```
 ##### Start Keyboard Teleop
 ```
