@@ -1,0 +1,20 @@
+{
+  "configurations": [
+    {
+      "browse": {
+        "databaseFilename": "",
+        "limitSymbolsToIncludedHeaders": true
+      },
+      "includePath": [
+        "/home/jotellybarros/catkin_turtlebot3-camera/devel/include",
+        "/opt/ros/kinetic/include",
+        "/home/jotellybarros/catkin_turtlebot3-camera/src/orb_slam_ros/include",
+        "/home/jotellybarros/catkin_turtlebot3-camera/src/simulations_Gazebo_Ros/turtlebot3_simulations/turtlebot3_fake/include",
+        "/home/jotellybarros/catkin_turtlebot3-camera/src/simulations_Gazebo_Ros/turtlebot3_simulations/turtlebot3_gazebo/include",
+        "/home/jotellybarros/catkin_turtlebot3-camera/src/simulations_Gazebo_Ros/turtlebot3/turtlebot3_slam/include",
+        "/usr/include"
+      ],
+      "name": "Linux"
+    }
+  ]
+}

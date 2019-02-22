@@ -2,30 +2,27 @@
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="myCameraStereo">  
   
   <link name="world"/>
-
   <joint name="fixed_joint" type="revolute">
-    <limit upper="0" lower="0" effort="1000000000" velocity="0" />
+    <limit upper="0" lower="0" effort="0" velocity="0" />
     <origin xyz="0 0 0" rpy="0 0 0"/>
-    <axis xyz="0 0 1" />
+    <axis xyz="0 0 0" />
     <parent link="world" />
-    <child link="second_link" />
+    <child link="third_link" />
   </joint>
-  
+
   <!-- Sensor link -->
   <link name="cameras">
     <inertial>
       <origin xyz="0 0 0" rpy="0 0 0"/>
-      <mass value="0.1"/>
+      <mass value="0.5"/>
       <inertia ixx="0.4" ixy="0.0" ixz="0.0" iyy="0.4" iyz="0.0" izz="0.2"/>
     </inertial>
-
     <visual>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <origin xyz="0 0 0.8" rpy="0 0 0"/>
       <geometry>
         <mesh filename="file://$(find camera_stereo)/meshes/ZEDM.stl" scale="1 1 1"/>
       </geometry>
     </visual>
-
     <collision>
       <geometry>
        <box size="0.05 0.05 0.05"/>
@@ -35,6 +32,27 @@
   </link>
 
   <link name="second_link">
+    <inertial>
+        <mass value="1" />
+        <inertia ixx="0.5" ixy="0.0" ixz="0.0" iyy="0.5" iyz="0.0" izz="0.5"/>
+    </inertial>
+    <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0" />
+    <collision>
+      <geometry>
+        <box size="0.005 0.005 0.015" />
+      </geometry>
+    </collision>
+    <visual>
+      <geometry>
+        <sphere radius="0.05"/>
+      </geometry>
+      <material name="green">
+        <color rgba="0 0 1 1"/>
+      </material>
+    </visual>
+  </link>
+
+  <link name="third_link">
     <inertial>
         <mass value="1000" />
         <inertia ixx="100" ixy="0.0" ixz="0.0" iyy="100" iyz="0.0" izz="100"/>
@@ -47,24 +65,35 @@
     </collision>
     <visual>
       <geometry>
-        <box size="0.05 0.05 0.15" />
+        <sphere radius="0.05"/>
       </geometry>
+      <material name="green">
+        <color rgba="0 1 0 1"/>
+      </material>
     </visual>
   </link>
 
+  <!-- * * * Joint Definitions * * * -->  
   <joint name="base_to_second_joint" type="prismatic">
-    <parent link="second_link"/>
     <child link="cameras"/>
+    <parent link="second_link"/>
+    <axis xyz="0 1 0"/>
+    <limit upper="5" lower="-1" effort="100" velocity="1"/>
+    <origin xyz="0 0 0.6" rpy="0.0 0.0 ${pi/2}"/> 
+  </joint>
+
+  <joint name="base_to_third_joint" type="prismatic">
+    <child link="second_link"/>
+    <parent link="third_link"/>    
     <axis xyz="1 0 0" />
-    <limit upper="5" lower="-1" effort="10000" velocity="1"/>
-    <origin xyz="0.3 0. 0" rpy="0.0 0.0 0.0"/> 
+    <limit upper="5" lower="-1" effort="100" velocity="1"/>
+    <origin xyz="0 0 0.1" rpy="0.0 0.0 0.0"/> 
   </joint>
 
   <!-- camera -->
   <gazebo reference="cameras">
     <sensor type="multicamera" name="stereo_camera">
       <update_rate>30</update_rate>
-
         <camera name="left">
           <horizontal_fov>1.3962634</horizontal_fov>
           <image>
@@ -83,7 +112,7 @@
           </noise>
         </camera>
         <camera name="right">
-          <pose>0 -0.10 0 0 0 0</pose>
+          <pose>0 0 0 0 0 ${pi/2}</pose>
           <horizontal_fov>1.3962634</horizontal_fov>
           <image>
             <width>640</width>
@@ -124,7 +153,6 @@
         <depthImageTopicName>camera_depth</depthImageTopicName>
         <depthImageCameraInfoTopicName>depth_info</depthImageCameraInfoTopicName>
       </plugin>
-
     </sensor>
   </gazebo>
 
@@ -133,17 +161,35 @@
     <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
       <robotNamespace>/rrbot</robotNamespace>
     </plugin>
+    <plugin name="joint_state_publisher" filename="libjoint_state_publisher.so">
+      <robotNamespace>rrbot</robotNamespace>
+      <updateRate>40</updateRate>
+    </plugin>
   </gazebo>
 
-  <!-- transmission -->
+  <!-- transmission base_to_second_trans -->
   <transmission name="base_to_second_trans">
     <type>transmission_interface/SimpleTransmission</type>
-    <actuator name="motor1">
+    <actuator name="motor_y">
       <mechanicalReduction>1</mechanicalReduction>
     </actuator>
+
     <joint name="base_to_second_joint">
       <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
     </joint>
   </transmission>
+
+  <!-- transmission base_to_third_trans -->
+  <transmission name="base_to_third_trans">
+    <type>transmission_interface/SimpleTransmission</type>
+    <actuator name="motor_x">
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+
+    <joint name="base_to_third_joint">
+      <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+    </joint>
+  </transmission>
+
 
 </robot>
