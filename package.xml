@@ -22,5 +22,8 @@
   <run_depend>rviz</run_depend>
   <run_depend>urdf_tutorial</run_depend>
   <run_depend>xacro</run_depend>
-
+  <run_depend>controller_manager</run_depend>
+  <build_depend>DBoW2_orb_slam_ros</build_depend>
+  <build_depend>g2o_orb_slam_ros</build_depend>
+  <build_depend>Pangolin</build_depend>
 </package>
