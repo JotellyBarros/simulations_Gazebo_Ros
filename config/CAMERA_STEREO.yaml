@@ -25,14 +25,15 @@ Camera.fps: 30.0
 # stereo baseline times fx
 # is the horizontal focal length (in pixels) multiplied by the baseline (in meters).
 #Camera.bf: 36.488 Bom
-Camera.bf: 37.185
+#Camera.bf: 37.185
+Camera.bf: 38
 
 # Color order of the images (0: BGR, 1: RGB. It is ignored if images are grayscale)
 Camera.RGB: 1
 
 # Close/Far threshold. Baseline times.
 # ThDepth can be safely set around 50.
-ThDepth: 40
+ThDepth: 50
 
 # Deptmap values factor (what pixel value in the depth image corresponds to 1m?)
 # DepthMapFactor is a scale factor that multiplies the input depthmap (if needed) if you are using a RGB-D camera.
