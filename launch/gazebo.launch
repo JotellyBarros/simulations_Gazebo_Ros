@@ -16,7 +16,7 @@
   <node
     name="orb_slam_ros" pkg="orb_slam_ros" 
     type="stereo_node_KITTI" 
-    args="/home/jotellybarros/Documents/files_yaml/CAMERA_STEREO.yaml $(find orb_slam_ros)/Vocabulary/ORBvoc.bin"
+    args="$(find camera_stereo)/config/CAMERA_STEREO.yaml $(find orb_slam_ros)/Vocabulary/ORBvoc.bin"
     output="screen">
 
     <remap from="/camera/left/image_raw"  to="/myCameraStereo/stereo_camera/left/image_raw" />
