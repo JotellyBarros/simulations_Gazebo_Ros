@@ -24,7 +24,7 @@ Camera.fps: 30.0
 
 # stereo baseline times fx
 # is the horizontal focal length (in pixels) multiplied by the baseline (in meters).
-Camera.bf: 37.160
+Camera.bf: 37
 
 # Color order of the images (0: BGR, 1: RGB. It is ignored if images are grayscale)
 Camera.RGB: 1
