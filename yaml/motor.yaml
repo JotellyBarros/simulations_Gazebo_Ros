@@ -8,20 +8,20 @@ rrbot:
   motor_x_position_controller:
     type: position_controllers/JointPositionController
     joint: 'base_to_vertical_link'
-    pid: {p: 0.01, i: 0.01, d: 0}
+    pid: {p: 0.01, i: 0.01, d: 0.01}
 
   motor_y_position_controller:
     type: position_controllers/JointPositionController
     joint: 'base_to_horizontal_link'
-    pid: {p: 0.01, i: 0.01, d: 0}
+    pid: {p: 0.01, i: 0.01, d: 0.01}
 
   horizontal_rotation_position_controller:
     type: position_controllers/JointPositionController
     joint: 'base_to_horizontal_rotation_link'
-    pid: {p: 0.01, i: 0.01, d: 0}
+    pid: {p: 0.01, i: 0.01, d: 0.01}
 
 # gazebo_ros_control:
 #   pid_gains:   
-#     base_to_vertical_link: {p: 1000, i: 5, d: 100}
-#     base_to_horizontal_link: {p: 100, i: 5, d: 10}
-#     base_to_horizontal_rotation_link: {p: 10, i: 2, d: 1}
+#     base_to_vertical_link: {p: 0.01, i: 0.01, d: 0.01}
+#     base_to_horizontal_link: {p: 0.01, i: 0.01, d: 0.01}
+#     base_to_horizontal_rotation_link: {p: 0.01, i: 0.01, d: 0.01}

@@ -16,8 +16,22 @@
         <arg name="paused" value="$(arg paused)"/>
         <arg name="use_sim_time" value="$(arg use_sim_time)"/>
         <arg name="headless" value="$(arg headless)"/>
-        <arg name="world_name" value="$(find camera_stereo)/worlds/empty_chessboard.world"/>
+        <arg name="world_name" value="$(find camera_stereo)/worlds/my_chessboard.world"/>
     </include>
+
+    <param name="robot_description" command="$(find xacro)/xacro.py --inorder $(arg model)" />
+
+    <!-- push robot_description to factory and spawn robot in gazebo -->
+    <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" args="-z 0.07 -unpause -urdf -model robot -param robot_description" respawn="false" output="screen" />
+
+    <!-- Load joint controller configurations from YAML file to parameter server -->
+    <rosparam file="$(find camera_stereo)/yaml/motor.yaml" command="load"/>
+
+    <!-- load the controllers -->
+    <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" ns="rrbot" args="motor_x_position_controller motor_y_position_controller horizontal_rotation_position_controller joint_state_controller"/>
+
+    <!-- Start RViz -->
+    <!-- <node name="rviz" pkg="rviz" type="rviz" output="screen" args="-d $(find camera_stereo)/rviz/controller_demo.rviz"/> -->
 
     <!-- load the orb_slam_ros -->
     <!-- <node name="orb_slam_ros" pkg="orb_slam_ros" type="stereo_node_KITTI" args="$(find camera_stereo)/config/CAMERA_STEREO.yaml $(find orb_slam_ros)/Vocabulary/ORBvoc.bin" output="screen">
@@ -32,22 +46,7 @@
         <param name="min_num_kf_in_map" type="int" value="5" />
     </node> -->
 
-    <!-- Load joint controller configurations from YAML file to parameter server -->
-    <rosparam file="$(find camera_stereo)/yaml/motor.yaml" command="load"/>
-
-    <param name="robot_description" command="$(find xacro)/xacro.py --inorder $(arg model)" />
-
-    <!-- load the controllers -->
-    <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" ns="rrbot" args="motor_x_position_controller motor_y_position_controller horizontal_rotation_position_controller joint_state_controller"/>
-
-    <!-- Start RViz -->
-    <!-- <node name="rviz" pkg="rviz" type="rviz" output="screen" args="-d $(find camera_stereo)/rviz/controller_demo.rviz"/> -->
-
-    <!-- push robot_description to factory and spawn robot in gazebo -->
-    <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" args="-z 1.0 -unpause -urdf -model robot -param robot_description" respawn="false" output="screen" />
-
     <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher">
         <param name="publish_frequency" type="double" value="30.0" />
     </node>
-
 </launch>
