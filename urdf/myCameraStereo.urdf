@@ -2,10 +2,10 @@
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="myCameraStereo">
 
     <link name="world"/>
-    <joint name="fixed_joint" type="fixed">
-        <!-- <limit upper="0" lower="0" effort="20000" velocity="0" /> -->
+    <joint name="fixed_joint" type="prismatic">
+        <limit upper="0" lower="0" effort="20000" velocity="0" />
         <origin xyz="0 0 0" rpy="0 0 0"/>
-        <!-- <axis xyz="0 0 1" /> -->
+        <axis xyz="0 0 1" />
         <parent link="world" />
         <child link="vertical_link" />
     </joint>
@@ -52,7 +52,7 @@
     <link name="horizontal_link">
         <inertial>
             <mass value="0.01"/>
-            <inertia ixx="2" ixy="0.0" ixz="0.0" iyy="2" iyz="0.0" izz="2"/>
+            <inertia ixx="1" ixy="0.0" ixz="0.0" iyy="1" iyz="0.0" izz="1"/>
         </inertial>
         <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0" />
         <collision>
@@ -69,8 +69,8 @@
 
     <link name="vertical_link">
         <inertial>
-            <mass value="0.01"/>
-            <inertia ixx="2" ixy="0.0" ixz="0.0" iyy="2" iyz="0.0" izz="2"/>
+            <mass value="1000"/>
+            <inertia ixx="100" ixy="100" ixz="100" iyy="1000" iyz="100" izz="100"/>
         </inertial>
         <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0" />
         <collision>
