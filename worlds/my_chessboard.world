@@ -1,12 +1,74 @@
 <?xml version="1.0"?>
 <sdf version="1.4">
-  <world name="default">
-    <include>
-      <uri>model://sun</uri>
-    </include>
-    <!-- Include chessboard_model -->
-    <include>
-      <uri>file://media/models/chessboard</uri>
-    </include>
-  </world>
+    <world name="default">
+        <!-- A global light source -->
+        <include>
+            <uri>model://sun</uri>
+            <pose>0 0 3 0 0 0</pose>
+        </include>
+        <!-- A ground plane -->
+        <include>
+            <uri>model://ground_plane</uri>
+        </include>
+        <model name="ambulance_01">
+            <include>
+                <uri>model://ambulance</uri>
+                <pose>13 5 0 0 0 0</pose>
+            </include>
+        </model>
+        <model name="ambulance_02">
+            <include>
+                <uri>model://ambulance</uri>
+                <pose>13 -5 0 0 0 0</pose>
+            </include>
+        </model>
+        <include>
+            <uri>model://asphalt_plane</uri>
+            <pose>5 0 0 0 0 0</pose>
+        </include>
+        <!-- Include chessboard_model -->
+        <!-- <include>
+            <uri>file://media/models/chessboard</uri>
+        </include> -->
+        <!-- A points light source -->
+        <light type="point" name="point_left">
+            <pose>0 2 2 0 0 0</pose>
+            <specular>.1 .1 .1 1</specular>
+            <attenuation>
+                <range>90</range>
+                <linear>0.2</linear>
+                <constant>0.8</constant>
+                <quadratic>0.01</quadratic>
+            </attenuation>
+            <cast_shadows>false</cast_shadows>
+        </light>
+        <light type="point" name="point_right">
+            <pose>0 -2 2 0 0 0</pose>
+            <specular>.1 .1 .1 1</specular>
+            <attenuation>
+                <range>90</range>
+                <linear>0.2</linear>
+                <constant>0.8</constant>
+                <quadratic>0.01</quadratic>
+            </attenuation>
+            <cast_shadows>false</cast_shadows>
+        </light>
+        <light type="point" name="point_center">
+            <pose>3 0 2 0 0 0</pose>
+            <specular>.1 .1 .1 1</specular>
+            <attenuation>
+                <range>90</range>
+                <linear>0.2</linear>
+                <constant>0.8</constant>
+                <quadratic>0.01</quadratic>
+            </attenuation>
+            <cast_shadows>false</cast_shadows>
+        </light>
+        <light type="directional" name="some_light">
+            <pose frame=''>0 0 3 0 0 0</pose>
+            <diffuse>0.9 0.9 0.9 1</diffuse>
+            <specular>0.2 0.2 0.2 1</specular>
+            <direction>0.5 0.1 -0.9</direction>
+        </light>
+    </world>
 </sdf>

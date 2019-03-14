@@ -7,7 +7,7 @@
     <arg name="headless" default="false"/>
     <arg name="debug" default="false"/>
     <arg name="model" default="$(find camera_stereo)/urdf/myCameraStereo.urdf"/>
-    <arg name="chessboard_model" default="$(find camera_stereo)/sdf/chessboard_model.sdf"/>
+    <!-- <arg name="chessboard_model" default="$(find camera_stereo)/sdf/chessboard_model.sdf"/> -->
 
     <!-- We resume the logic in empty_world.launch, changing only the name of the world to be launched -->
     <include file="$(find gazebo_ros)/launch/empty_world.launch">
@@ -16,13 +16,13 @@
         <arg name="paused" value="$(arg paused)"/>
         <arg name="use_sim_time" value="$(arg use_sim_time)"/>
         <arg name="headless" value="$(arg headless)"/>
-        <arg name="world_name" value="$(find camera_stereo)/worlds/my_chessboard.world"/>
+        <arg name="world_name" value="$(find camera_stereo)/worlds/asphalt_plane_mod.world"/>
     </include>
 
     <param name="robot_description" command="$(find xacro)/xacro.py --inorder $(arg model)" />
 
     <!-- push robot_description to factory and spawn robot in gazebo -->
-    <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" args="-z 0.07 -unpause -urdf -model robot -param robot_description" respawn="false" output="screen" />
+    <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" args="-z 1 -unpause -urdf -model robot -param robot_description" respawn="false" output="screen" />
 
     <!-- Load joint controller configurations from YAML file to parameter server -->
     <rosparam file="$(find camera_stereo)/yaml/motor.yaml" command="load"/>
@@ -31,10 +31,14 @@
     <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" ns="rrbot" args="motor_x_position_controller motor_y_position_controller horizontal_rotation_position_controller joint_state_controller"/>
 
     <!-- Start RViz -->
-    <!-- <node name="rviz" pkg="rviz" type="rviz" output="screen" args="-d $(find camera_stereo)/rviz/controller_demo.rviz"/> -->
+    <node name="rviz" pkg="rviz" type="rviz" output="screen" args="-d $(find camera_stereo)/rviz/controller_demo.rviz"/>
+
+    <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher">
+        <param name="publish_frequency" type="double" value="30.0" />
+    </node>
 
     <!-- load the orb_slam_ros -->
-    <!-- <node name="orb_slam_ros" pkg="orb_slam_ros" type="stereo_node_KITTI" args="$(find camera_stereo)/config/CAMERA_STEREO.yaml $(find orb_slam_ros)/Vocabulary/ORBvoc.bin" output="screen">
+    <node name="orb_slam_ros" pkg="orb_slam_ros" type="stereo_node_KITTI" args="$(find camera_stereo)/config/CAMERA_STEREO.yaml $(find orb_slam_ros)/Vocabulary/ORBvoc.bin" output="screen">
         <remap from="/camera/left/image_raw" to="/myCameraStereo/stereo_camera/left/image_raw" />
         <remap from="/camera/right/image_raw" to="/myCameraStereo/stereo_camera/right/image_raw" />
 
@@ -44,9 +48,9 @@
         <param name="pointcloud_frame_id" type="string" value="map" />
         <param name="camera_frame_id" type="string" value="cameras" />
         <param name="min_num_kf_in_map" type="int" value="5" />
-    </node> -->
-
-    <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher">
-        <param name="publish_frequency" type="double" value="30.0" />
     </node>
+
+    <!-- load the rqt_console -->
+    <node name="rqt_gui" pkg="rqt_gui" type="rqt_gui"/>
+
 </launch>
