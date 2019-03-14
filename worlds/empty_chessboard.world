@@ -486,6 +486,7 @@
     </light>
     <!-- Include chessboard_model -->
     <include>
+    <pose>0.5 0 1.5 0 1.57 0</pose>
       <uri>file://media/models/chessboard</uri>
     </include>
   </world>

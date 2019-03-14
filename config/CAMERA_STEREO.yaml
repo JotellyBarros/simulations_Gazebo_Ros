@@ -29,7 +29,7 @@ Camera.fps: 30.0
 # stereo baseline times fx
 # is the horizontal focal length (in pixels) multiplied by the baseline (in meters).
 # (Camera.fx * baseline)
-Camera.bf: 4.57 #4.573641168
+Camera.bf: 4.5736 #4.573641168
 
 # Color order of the images (0: BGR, 1: RGB. It is ignored if images are grayscale)
 Camera.RGB: 1
@@ -95,7 +95,7 @@ RIGHT.P:  !!opencv-matrix
 #--------------------------------------------------------------------------------------------
 
 # ORB Extractor: Number of features per image
-ORBextractor.nFeatures: 2500
+ORBextractor.nFeatures: 500
 
 # ORB Extractor: Scale factor between levels in the scale pyramid 	
 ORBextractor.scaleFactor: 1.2
@@ -107,7 +107,7 @@ ORBextractor.nLevels: 8
 # Image is divided in a grid. At each cell FAST are extracted imposing a minimum response.
 # Firstly we impose iniThFAST. If no corners are detected we impose a lower value minThFAST
 # You can lower these values if your images have low contrast			
-ORBextractor.iniThFAST: 20
+ORBextractor.iniThFAST: 14
 ORBextractor.minThFAST: 7
 
 #--------------------------------------------------------------------------------------------

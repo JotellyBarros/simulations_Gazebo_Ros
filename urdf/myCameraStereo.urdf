@@ -94,7 +94,7 @@
         <child link="cameras"/>
         <parent link="horizontal_rotation_link"/>
         <axis xyz="0 0 1" />
-        <limit upper="10" lower="-1" effort="100" velocity="1"/>
+        <limit upper="10" lower="-1" effort="100" velocity="0.01"/>
         <origin xyz="0 0 0.10" rpy="0.0 0.0 0"/>
     </joint>
 
@@ -102,7 +102,7 @@
         <child link="horizontal_rotation_link"/>
         <parent link="horizontal_link"/>
         <axis xyz="0 1 0"/>
-        <limit upper="10" lower="-1" effort="100" velocity="1"/>
+        <limit upper="10" lower="-1" effort="100" velocity="0.01"/>
         <origin xyz="0 0 0.10" rpy="0 0 0"/>
     </joint>
 
@@ -110,7 +110,7 @@
         <child link="horizontal_link"/>
         <parent link="vertical_link"/>
         <axis xyz="1 0 0" />
-        <limit upper="10" lower="-1" effort="100" velocity="1"/>
+        <limit upper="10" lower="-1" effort="100" velocity="0.01"/>
         <origin xyz="0 0 0.10" rpy="0 0 0"/>
     </joint>
 
