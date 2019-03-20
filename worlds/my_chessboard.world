@@ -7,7 +7,7 @@
             <pose>0 0 3 0 0 0</pose>
         </include>
         <!-- A ground plane -->
-        <include>
+        <!-- <include>
             <uri>model://ground_plane</uri>
         </include>
         <model name="ambulance_01">
@@ -25,11 +25,11 @@
         <include>
             <uri>model://asphalt_plane</uri>
             <pose>5 0 0 0 0 0</pose>
-        </include>
-        <!-- Include chessboard_model -->
-        <!-- <include>
-            <uri>file://media/models/chessboard</uri>
         </include> -->
+        <!-- Include chessboard_model -->
+        <include>
+            <uri>file://media/models/chessboard</uri>
+        </include>
         <!-- A points light source -->
         <light type="point" name="point_left">
             <pose>0 2 2 0 0 0</pose>

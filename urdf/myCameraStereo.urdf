@@ -156,14 +156,14 @@
 
             <plugin name="camera_controller" filename="libgazebo_ros_multicamera.so">
                 <updateRate>0.0</updateRate>
-                <scale_to_hfov>true</scale_to_hfov>
+                <scale_to_hfov>false</scale_to_hfov>
                 <alwaysOn>true</alwaysOn>
-                <baseline>0.12</baseline>
+                <baseline>2</baseline>
                 <frameName>cameras</frameName>
                 <cameraName>myCameraStereo/stereo_camera</cameraName>
                 <cameraInfoTopicName>camera_info</cameraInfoTopicName>
 
-                <hackBaseline>0.07</hackBaseline>
+                <hackBaseline>1</hackBaseline>
                 <focal_length>320</focal_length>
                 <distortion_k1>0.00000001</distortion_k1>
                 <distortion_k2>0.00000001</distortion_k2>
@@ -187,7 +187,7 @@
         </plugin>
         <plugin name="joint_state_publisher" filename="libjoint_state_publisher.so">
             <robotNamespace>rrbot</robotNamespace>
-            <updateRate>50</updateRate>
+            <updateRate>30</updateRate>
         </plugin>
     </gazebo>
 
