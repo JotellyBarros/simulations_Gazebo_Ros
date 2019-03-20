@@ -16,7 +16,7 @@
         <arg name="paused" value="$(arg paused)"/>
         <arg name="use_sim_time" value="$(arg use_sim_time)"/>
         <arg name="headless" value="$(arg headless)"/>
-        <arg name="world_name" value="$(find camera_stereo)/worlds/my_chessboard.world"/>
+        <arg name="world_name" value="$(find camera_stereo)/worlds/asphalt_plane_mod.world"/>
     </include>
 
     <param name="robot_description" command="$(find xacro)/xacro.py --inorder $(arg model)" />
@@ -35,7 +35,7 @@
     </node>
     
     <!-- Start RViz -->
-    <!-- <node name="rviz" pkg="rviz" type="rviz" output="screen" args="-d $(find camera_stereo)/rviz/controller_demo.rviz"/> -->
+    <node name="rviz" pkg="rviz" type="rviz" output="screen" args="-d $(find camera_stereo)/rviz/controller_demo.rviz"/>
 
 
     <!-- load the orb_slam_ros -->

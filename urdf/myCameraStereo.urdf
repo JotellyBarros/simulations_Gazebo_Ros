@@ -137,6 +137,7 @@
             </camera>
             <camera name="right">
                 <!-- <pose>0 0 0 0 0 ${pi/2}</pose> -->
+                <pose>0 -0.12 0 0 0 0</pose>
                 <horizontal_fov>1.3962634</horizontal_fov>
                 <image>
                     <width>640</width>
@@ -156,14 +157,12 @@
 
             <plugin name="camera_controller" filename="libgazebo_ros_multicamera.so">
                 <updateRate>0.0</updateRate>
-                <scale_to_hfov>false</scale_to_hfov>
+                <scale_to_hfov>true</scale_to_hfov>
                 <alwaysOn>true</alwaysOn>
-                <baseline>2</baseline>
                 <frameName>cameras</frameName>
                 <cameraName>myCameraStereo/stereo_camera</cameraName>
                 <cameraInfoTopicName>camera_info</cameraInfoTopicName>
-
-                <hackBaseline>1</hackBaseline>
+                <hackBaseline>0</hackBaseline>
                 <focal_length>320</focal_length>
                 <distortion_k1>0.00000001</distortion_k1>
                 <distortion_k2>0.00000001</distortion_k2>

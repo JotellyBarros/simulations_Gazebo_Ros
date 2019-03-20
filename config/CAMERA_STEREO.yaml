@@ -30,7 +30,7 @@ Camera.fps: 30.0
 # is the horizontal focal length (in pixels) multiplied by the baseline (in meters).
 # (Camera.fx * baseline)
 # Camera.bf: 4.573641168
-Camera.bf: 4.573290582 # (((Camera.fx + Camera.fy) / 2) * baseline)
+Camera.bf: 45.73290582 # (((Camera.fx + Camera.fy) / 2) * baseline)
 
 # Color order of the images (0: BGR, 1: RGB. It is ignored if images are grayscale)
 Camera.RGB: 1
