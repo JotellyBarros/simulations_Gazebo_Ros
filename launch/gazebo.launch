@@ -31,7 +31,7 @@
     <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" ns="rrbot" args="motor_x_position_controller motor_y_position_controller horizontal_rotation_position_controller joint_state_controller"/>
 
     <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher">
-        <param name="publish_frequency" type="double" value="30.0" />
+        <param name="publish_frequency" type="double" value="50.0" />
     </node>
     
     <!-- Start RViz -->
