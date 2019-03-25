@@ -1,0 +1,227 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="myCameraStereo">
+
+    <!-- Used for fixing robot to Gazebo 'base_link' -->
+    <link name="world"/>
+    <joint name="fixed_joint" type="revolute">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <limit lower="0" upper="0" effort="1000" velocity="0"/>
+        <axis xyz="0 0 1"/>
+        <parent link="world" />
+        <child link="vertical_link" />
+    </joint>
+
+    <!-- Sensor link -->
+    <link name="cameras">
+        <inertial>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <mass value="1"/>
+            <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+        </inertial>
+        <visual>
+            <origin xyz="-0.03 0 0" rpy="${pi/2} 0 ${pi/2}"/>
+            <geometry>
+                <mesh filename="file://$(find camera_stereo)/meshes/multisenseS7.stl" scale="0.0005 0.0005 0.0005"/>
+            </geometry>
+            <material name="">
+                <color rgba="0.9098 0.44314 0.031373 1" />
+            </material>
+        </visual>
+        <collision>
+            <geometry>
+                <box size="0.05 0.05 0.05"/>
+            </geometry>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+        </collision>
+    </link>
+
+    <link name="horizontal_rotation_link">
+        <inertial>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <mass value="1"/>
+            <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+        </inertial>
+        <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0" />
+        <collision>
+            <geometry>
+                <box size="0.005 0.005 0.015" />
+            </geometry>
+        </collision>
+        <visual>
+            <geometry>
+                <sphere radius="0.03"/>
+            </geometry>
+        </visual>
+    </link>
+
+    <link name="horizontal_link">
+        <inertial>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <mass value="1"/>
+            <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+        </inertial>
+        <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0" />
+        <collision>
+            <geometry>
+                <box size="0.005 0.005 0.015" />
+            </geometry>
+        </collision>
+        <visual>
+            <geometry>
+                <sphere radius="0.03"/>
+            </geometry>
+        </visual>
+    </link>
+
+    <link name="vertical_link">
+        <inertial>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <mass value="1"/>
+            <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+        </inertial>
+        <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0" />
+        <collision>
+            <geometry>
+                <box size="0.005 0.005 0.015" />
+            </geometry>
+        </collision>
+        <visual>
+            <geometry>
+                <sphere radius="0.03"/>
+            </geometry>
+        </visual>
+    </link>
+
+    <!-- * * * Joint Definitions * * * -->
+    <joint name="base_to_horizontal_rotation_link" type="revolute">
+        <child link="cameras"/>
+        <parent link="horizontal_rotation_link"/>
+        <axis xyz="0 0 1" />
+        <limit upper="10" lower="-10" effort="100" velocity="0.3"/>
+        <origin xyz="0 0 0.10" rpy="0.0 0.0 0"/>
+    </joint>
+
+    <joint name="base_to_horizontal_link" type="prismatic">
+        <child link="horizontal_rotation_link"/>
+        <parent link="horizontal_link"/>
+        <axis xyz="0 1 0"/>
+        <limit upper="10" lower="-1" effort="100" velocity="1"/>
+        <origin xyz="0 0 0.10" rpy="0 0 0"/>
+    </joint>
+
+    <joint name="base_to_vertical_link" type="prismatic">
+        <child link="horizontal_link"/>
+        <parent link="vertical_link"/>
+        <axis xyz="1 0 0" />
+        <limit upper="10" lower="-1" effort="100" velocity="1"/>
+        <origin xyz="0 0 0.10" rpy="0 0 0"/>
+    </joint>
+
+    <!-- camera -->
+    <gazebo reference="cameras">
+        <sensor type="multicamera" name="stereo_camera">
+            <update_rate>30</update_rate>
+            <camera name="left">
+                <horizontal_fov>1.3962634015954636</horizontal_fov>
+                <image>
+                    <width>1024</width>
+                    <height>544</height>
+                    <format>R8G8B8</format>
+                </image>
+                <clip>
+                    <near>0.04</near>
+                    <far>300</far>
+                </clip>
+                <noise>
+                    <type>gaussian</type>
+                    <mean>0.0</mean>
+                    <stddev>0.007</stddev>
+                </noise>
+            </camera>
+            <camera name="right">
+                <pose>0 0.007 0 0 0 0</pose>
+                <horizontal_fov>1.3962634015954636</horizontal_fov>
+                <image>
+                    <width>1024</width>
+                    <height>544</height>
+                    <format>R8G8B8</format>
+                </image>
+                <clip>
+                    <near>0.04</near>
+                    <far>300</far>
+                </clip>
+                <noise>
+                    <type>gaussian</type>
+                    <mean>0.0</mean>
+                    <stddev>0.007</stddev>
+                </noise>
+            </camera>
+
+            <plugin name="camera_controller" filename="libgazebo_ros_multicamera.so">
+                <updateRate>0.0</updateRate>
+                <scale_to_hfov>true</scale_to_hfov>
+                <alwaysOn>true</alwaysOn>
+                <frameName>cameras</frameName>
+                <cameraName>myCameraStereo/stereo_camera</cameraName>
+                <cameraInfoTopicName>camera_info</cameraInfoTopicName>
+                <hackBaseline>0</hackBaseline>
+                <focal_length>6.5</focal_length>
+                <distortion_k1>0.00000001</distortion_k1>
+                <distortion_k2>0.00000001</distortion_k2>
+                <distortion_k3>0.00000001</distortion_k3>
+                <distortion_t1>0.00000001</distortion_t1>
+                <distortion_t2>0.00000001</distortion_t2>
+
+                <!-- required for ros depth cam -->
+                <imageTopicName>image_raw</imageTopicName>
+                <pointCloudTopicName>camera_cloud</pointCloudTopicName>
+                <depthImageTopicName>camera_depth</depthImageTopicName>
+                <depthImageCameraInfoTopicName>depth_info</depthImageCameraInfoTopicName>
+            </plugin>
+        </sensor>
+    </gazebo>
+
+    <!-- ROS Control plugin for Gazebo -->
+    <gazebo>
+        <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+            <robotNamespace>/rrbot</robotNamespace>
+        </plugin>
+        <plugin name="joint_state_publisher" filename="libjoint_state_publisher.so">
+            <robotNamespace>rrbot</robotNamespace>
+            <updateRate>30</updateRate>
+        </plugin>
+    </gazebo>
+
+    <!-- transmission base_to_vertical_link_trans -->
+    <transmission name="base_to_vertical_link_trans">
+        <type>transmission_interface/SimpleTransmission</type>
+        <actuator name="motor_x">
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+        <joint name="base_to_vertical_link">
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+        </joint>
+    </transmission>
+
+    <!-- transmission base_to_horizontal_trans -->
+    <transmission name="base_to_horizontal_trans">
+        <type>transmission_interface/SimpleTransmission</type>
+        <actuator name="motor_y">
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+        <joint name="base_to_horizontal_link">
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+        </joint>
+    </transmission>
+
+    <!-- transmission horizontal_rotation_trans -->
+    <transmission name="horizontal_rotation_trans">
+        <type>transmission_interface/SimpleTransmission</type>
+        <actuator name="horizontal_rotation">
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+        <joint name="base_to_horizontal_rotation_link">
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+        </joint>
+    </transmission>
+</robot>
