@@ -36,7 +36,7 @@ Camera.RGB: 1
 
 # Close/Far threshold. Baseline times.
 # ThDepth can be safely set around 50.
-ThDepth: 30
+ThDepth: 50
 
 #--------------------------------------------------------------------------------------------
 # Stereo Rectification. Only if you need to pre-rectify the images.

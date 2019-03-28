@@ -129,7 +129,7 @@
                     <format>R8G8B8</format>
                 </image>
                 <clip>
-                    <near>0.04</near>
+                    <near>0.4</near>
                     <far>300</far>
                 </clip>
                 <noise>
@@ -139,7 +139,7 @@
                 </noise>
             </camera>
             <camera name="right">
-                <pose>0 0.007 0 0 0 0</pose>
+                <pose>0 -0.07 0 0 0 0</pose>
                 <horizontal_fov>1.3962634015954636</horizontal_fov>
                 <image>
                     <width>1024</width>
@@ -147,7 +147,7 @@
                     <format>R8G8B8</format>
                 </image>
                 <clip>
-                    <near>0.04</near>
+                    <near>0.4</near>
                     <far>300</far>
                 </clip>
                 <noise>
