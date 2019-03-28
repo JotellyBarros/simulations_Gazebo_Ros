@@ -42,6 +42,7 @@ ThDepth: 50
 # Stereo Rectification. Only if you need to pre-rectify the images.
 # Camera.fx, .fy, etc must be the same as in LEFT.P
 #--------------------------------------------------------------------------------------------
+
 LEFT.height: 1024
 LEFT.width: 544
 LEFT.D: !!opencv-matrix
