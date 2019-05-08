@@ -49,8 +49,6 @@
     </node>
 
     <!-- load the rqt_console -->
-    <!--
-        <node name="rqt_gui" pkg="rqt_gui" type="rqt_gui"/>
-    -->
+    <node name="rqt_gui" pkg="rqt_gui" type="rqt_gui"/>
 
 </launch>

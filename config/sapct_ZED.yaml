@@ -6,45 +6,97 @@
 #--------------------------------------------------------------------------------------------
 
 # Camera calibration and distortion parameters (OpenCV) 
-Camera.fx: 381.62
-Camera.fy: 381.62
-Camera.cx: 360.5
-Camera.cy: 360.5
+# camera matrix
+# data: [(Camera.fx), 0, (Camera.cx), 0, (Camera.fy), (Camera.cy), 0, 0, 1 ]
+Camera.fx: 381.136764
+Camera.fy: 381.078333
+Camera.cx: 320.050541
+Camera.cy: 239.324705
 
-Camera.k1: 0.0
-Camera.k2: 0.0
-Camera.p1: 0.0
-Camera.p2: 0.0
+# distortion_coefficients
+# data: [(Camera.k1), (Camera.k2), (Camera.p1), (Camera.p2), (Camera.k3)]
+Camera.k1: -0.000318
+Camera.k2: 0.000838
+Camera.p1: -0.000133
+Camera.p2: 0.000369
 
-Camera.width: 720
-Camera.height: 720
+Camera.width: 640
+Camera.height: 480
 
 # Camera frames per second 
 Camera.fps: 30.0
 
 # stereo baseline times fx
 # is the horizontal focal length (in pixels) multiplied by the baseline (in meters).
-#Camera.bf: 36.488 Bom
-Camera.bf: 37.185
+# (Camera.fx * baseline)
+# Camera.bf: 4.573641168
+Camera.bf: 45.73290582 # (((Camera.fx + Camera.fy) / 2) * baseline)
 
 # Color order of the images (0: BGR, 1: RGB. It is ignored if images are grayscale)
 Camera.RGB: 1
 
 # Close/Far threshold. Baseline times.
 # ThDepth can be safely set around 50.
-ThDepth: 40
+ThDepth: 30
 
-# Deptmap values factor (what pixel value in the depth image corresponds to 1m?)
-# DepthMapFactor is a scale factor that multiplies the input depthmap (if needed) if you are using a RGB-D camera.
-# For RGB-D inputs only. For some datasets (e.g. TUM) the depthmap values are scaled.
-# DepthMapFactor: 0.0
+#--------------------------------------------------------------------------------------------
+# Stereo Rectification. Only if you need to pre-rectify the images.
+# Camera.fx, .fy, etc must be the same as in LEFT.P
+#--------------------------------------------------------------------------------------------
+LEFT.height: 640
+LEFT.width: 480
+LEFT.D: !!opencv-matrix
+   rows: 1
+   cols: 5
+   dt: d
+   data: [-0.000318, 0.000838, -0.000133, 0.000369, 0.000000]
+LEFT.K: !!opencv-matrix
+   rows: 3
+   cols: 3
+   dt: d
+   data: [381.136764, 0.000000, 320.050541, 0.000000, 381.078333, 239.324705, 0.000000, 0.000000, 1.000000]
+LEFT.R:  !!opencv-matrix
+   rows: 3
+   cols: 3
+   dt: d
+   data: [0.998077, 0.045505, -0.042082, -0.045519, 0.077344, -0.995965, -0.042066, 0.995965, 0.079267]
+LEFT.P:  !!opencv-matrix
+   rows: 3
+   cols: 4
+   dt: d
+   data: [-12.218786, 0.000000, 268.579262, 0.000000, 0.000000, -12.218786, 130.559013, 0.000000, 0.000000, 0.000000, 1.000000, 0.000000]
+   
+RIGHT.height: 640
+RIGHT.width: 480
+RIGHT.D: !!opencv-matrix
+   rows: 1
+   cols: 5
+   dt: d
+   data: [-0.000297, 0.000854, -0.000127, 0.000384, 0.000000]
+RIGHT.K: !!opencv-matrix
+   rows: 3
+   cols: 3
+   dt: d
+   data: [381.146015, 0.000000, 320.059905, 0.000000, 381.087504, 239.338087, 0.000000, 0.000000, 1.000000]
+RIGHT.R:  !!opencv-matrix
+   rows: 3
+   cols: 3
+   dt: d
+   data: [0.998079, 0.045506, -0.042052, -0.045491, 0.077377, -0.995964, -0.042068, 0.995963, 0.079298]
+   
+RIGHT.P:  !!opencv-matrix
+   rows: 3
+   cols: 4
+   dt: d
+   data: [-12.218786, 0.000000, 268.579262, 0.000000, 0.000000, -12.218786, 130.559013, 0.000551, 0.000000, 0.000000, 1.000000, 0.000000]
 
+   
 #--------------------------------------------------------------------------------------------
 # ORB Parameters
 #--------------------------------------------------------------------------------------------
 
 # ORB Extractor: Number of features per image
-ORBextractor.nFeatures: 1500
+ORBextractor.nFeatures: 2000
 
 # ORB Extractor: Scale factor between levels in the scale pyramid    
 ORBextractor.scaleFactor: 1.2
@@ -56,19 +108,19 @@ ORBextractor.nLevels: 8
 # Image is divided in a grid. At each cell FAST are extracted imposing a minimum response.
 # Firstly we impose iniThFAST. If no corners are detected we impose a lower value minThFAST
 # You can lower these values if your images have low contrast        
-ORBextractor.iniThFAST: 12
-ORBextractor.minThFAST: 11
+ORBextractor.iniThFAST: 20
+ORBextractor.minThFAST: 7
 
 #--------------------------------------------------------------------------------------------
 # Viewer Parameters
 #--------------------------------------------------------------------------------------------
-#Viewer.KeyFrameSize: 0.05
-#Viewer.KeyFrameLineWidth: 1
-#Viewer.GraphLineWidth: 0.9
-#Viewer.PointSize: 2
-#Viewer.CameraSize: 0.08
-#Viewer.CameraLineWidth: 3
-#Viewer.ViewpointX: 0
-#Viewer.ViewpointY: -0.7
-#Viewer.ViewpointZ: -1.8
-#Viewer.ViewpointF: 500
+Viewer.KeyFrameSize: 0.5
+Viewer.KeyFrameLineWidth: 1
+Viewer.GraphLineWidth: 1
+Viewer.PointSize: 1
+Viewer.CameraSize: 0.5
+Viewer.CameraLineWidth: 1
+Viewer.ViewpointX: 0.00001
+Viewer.ViewpointY: 0.00001
+Viewer.ViewpointZ: 0.00001
+Viewer.ViewpointF: 2000
